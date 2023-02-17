@@ -26,9 +26,9 @@ include '../login-register/conn.php';
 	    $conn = connectDB();
 		if (isset($_POST['submit'])) {
 			if (strlen($_POST['name']) > 0 && strlen($_POST['password']) > 0){
-				$username = $_POST['name'];
-				$password = hash('sha256', $_POST['password']);
-				$stmt = $conn->prepare($sql = "SELECT * FROM users WHERE name='$username'");
+				$formUsername = $_POST['name'];
+				$formPassword = hash('sha256', $_POST['password']);
+				$stmt = $conn->prepare($sql = "SELECT * FROM users WHERE name='$formUsername'");
     			$result = $conn->query($sql);
     			$rows = $result->fetchAll(PDO::FETCH_ASSOC);
 				var_dump($rows);
@@ -36,8 +36,10 @@ include '../login-register/conn.php';
 			        echo "Nothing";
 			        return false;
 			    } else {
-					if ($password == $row['password']) {
-						$_SESSION['user_id'] = $row[id];
+					$DBPassword = $rows["password"];
+					echo $rows["password"];
+					if ($formPassword == $DBPassword) {
+						$_SESSION['user_id'] = $rows[id];
 					}
 				}
 			}
