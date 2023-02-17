@@ -6,7 +6,7 @@
 	</head>
 	<body>
 			<?php
-			include "../login/config.php";
+			include "../login-register/config.php";
 			loginForm();
 			loginVal();
 			?>
