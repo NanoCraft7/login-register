@@ -32,15 +32,16 @@ include '../login-register/conn.php';
     			$result = $conn->query($sql);
     			$rows = $result->fetchAll(PDO::FETCH_ASSOC);
 				var_dump($rows);
-    			if (count($rows) == 0) {
+    			if (count($rows) > 0) {
+					$DBPassword = $rows[0]["password"];
+					echo $rows[0]["password"];
+					if ($formPassword == $DBPassword) {
+						$session_user_id = $rows[0][id];
+					}
+					header("../login-register/_index.php");
+			    } else {
 			        echo "Nothing";
 			        return false;
-			    } else {
-					$DBPassword = $rows["password"];
-					echo $rows["password"];
-					if ($formPassword == $DBPassword) {
-						$_SESSION['user_id'] = $rows[id];
-					}
 				}
 			}
 		}
