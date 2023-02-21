@@ -33,12 +33,14 @@ include '../login-register/conn.php';
     			$rows = $result->fetchAll(PDO::FETCH_ASSOC);
 				var_dump($rows);
     			if (count($rows) > 0) {
-					$DBPassword = $rows[0]["password"];
+					$DBPassword = hash('sha256', $rows[0]["password"]);
 					echo $rows[0]["password"];
 					if ($formPassword == $DBPassword) {
-						$session_user_id = $rows[0][id];
+						$_SESSION['user_id'] = $rows[0]["id"];
+						header("../login-register/_index.php");
+					} else {
+						echo "no";
 					}
-					header("../login-register/_index.php");
 			    } else {
 			        echo "Nothing";
 			        return false;
